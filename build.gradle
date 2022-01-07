@@ -21,6 +21,11 @@ dependencies {
     testImplementation("com.codeborne:selenide:5.25.1")
     testRuntimeOnly("org.slf4j:slf4j-simple:1.7.32")
 
+    testImplementation("com.github.javafaker:javafaker:1.0.2");
+    // крутая бибилиотека котоая генерит что-либо по ссылке: com.github.javafaker
+
+
+
 
     // JUnit 5
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
