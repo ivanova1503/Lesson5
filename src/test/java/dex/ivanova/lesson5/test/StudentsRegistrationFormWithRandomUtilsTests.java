@@ -1,8 +1,7 @@
-package dex.ivanova.lesson5;
+package dex.ivanova.lesson5.test;
 
 
 import com.codeborne.selenide.Configuration;
-import dex.ivanova.lesson5.test.TestBase;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -10,19 +9,29 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static dex.ivanova.lesson5.utils.RandomUtils.getRandomEmail;
+import static dex.ivanova.lesson5.utils.RandomUtils.getRandomString;
 
-public class StudentsRegistrationFormWithTestBaseTests extends TestBase {
+public class StudentsRegistrationFormWithRandomUtilsTests {
 
 
+    String firstName= getRandomString(12);
+    String userEmail = getRandomEmail();
+
+    @BeforeAll
+    static void setUp() {
+        Configuration.baseUrl = "https://demoqa.com";
+        Configuration.browserSize = "1920x1080";
+    }
 
     @Test
     void fillFormTest() {
         open("/automation-practice-form");
         $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
 
-        $("#firstName").setValue("Yuliya");
+        $("#firstName").setValue(firstName);
         $("#lastName").setValue("Ivanova");
-        $("#userEmail").setValue("test@test.com");
+        $("#userEmail").setValue(userEmail);
         $("#genterWrapper").$(byText("Female")).click();
         $("#userNumber").setValue("7777703333");
         $("#dateOfBirthInput").click();
@@ -41,17 +50,9 @@ public class StudentsRegistrationFormWithTestBaseTests extends TestBase {
 
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
         $(".table-responsive").$(byText("Student Name"))
-                .parent().shouldHave(text("Yuliya Ivanova"));
+                .parent().shouldHave(text(firstName+" Ivanova"));
 
-        $(".table-responsive").shouldHave(text("Yuliya"));
-        $(".table-responsive").shouldHave(text("Ivanova"));
-        $(".table-responsive").shouldHave(text("test@test.com"));
-        $(".table-responsive").shouldHave(text("Female"));
-        $(".table-responsive").shouldHave(text("7777703333"));
-        $(".table-responsive").shouldHave(text("30 July,2008"));
-        $(".table-responsive").shouldHave(text("Math"));
-        $(".table-responsive").shouldHave(text("Sports"));
-        $(".table-responsive").shouldHave(text("1.png"));
-        $(".table-responsive").shouldHave(text("NCR Noida"));
+        $(".table-responsive").$(byText("Student Email"))
+                .parent().shouldHave(text(userEmail));
     }
 }

@@ -1,4 +1,4 @@
-package dex.ivanova.lesson5;
+package dex.ivanova.lesson5.test;
 
 
 import com.codeborne.selenide.Configuration;

@@ -1,26 +1,19 @@
-package dex.ivanova.lesson5;
+package dex.ivanova.lesson5.test;
 
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
+import dex.ivanova.lesson5.test.TestBase;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selectors.byValue;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
-public class StudentsRegistrationFormTests {
+public class StudentsRegistrationFormWithTestBaseTests extends TestBase {
 
-    @BeforeAll
-    static void setUp() {
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
-    }
+
 
     @Test
     void fillFormTest() {
