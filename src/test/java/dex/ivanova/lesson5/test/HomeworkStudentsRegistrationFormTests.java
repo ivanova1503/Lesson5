@@ -21,6 +21,8 @@ public class HomeworkStudentsRegistrationFormTests {
 
         RegistrationPage registrationPage = new RegistrationPage();
 
+
+
         @BeforeAll
         static void setUp() {
             Configuration.baseUrl = "https://demoqa.com";

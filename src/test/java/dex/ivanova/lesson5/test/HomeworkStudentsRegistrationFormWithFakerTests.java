@@ -2,19 +2,17 @@ package dex.ivanova.lesson5.test;
 
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import com.github.javafaker.Faker;
-
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-import static dex.ivanova.lesson5.utils.RandomUtils.getRandomEmail;
-import static dex.ivanova.lesson5.utils.RandomUtils.getRandomString;
+import static com.codeborne.selenide.Selenide.*;
 
-public class StudentsRegistrationFormWithFakerTests {
+public class HomeworkStudentsRegistrationFormWithFakerTests {
 
     Faker faker = new Faker();
 
@@ -22,9 +20,11 @@ public class StudentsRegistrationFormWithFakerTests {
     String lastName= faker.name().lastName();
     String userEmail = faker.internet().emailAddress();
     String currentAddress = faker.address().fullAddress();
-    String dateOfBirth = faker.date().birthday().toString();
-    String mobile = faker.phoneNumber().phoneNumber();
+    String mobile = faker.number().digits(10);
 
+    SelenideElement
+            tableResponse=$(".table-responsive");
+    
     @BeforeAll
     static void setUp() {
         Configuration.baseUrl = "https://demoqa.com";
@@ -37,10 +37,10 @@ public class StudentsRegistrationFormWithFakerTests {
         $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
 
         $("#firstName").setValue(firstName);
-        $("#lastName").setValue("Ivanova");
+        $("#lastName").setValue(lastName);
         $("#userEmail").setValue(userEmail);
         $("#genterWrapper").$(byText("Female")).click();
-        $("#userNumber").setValue("7777703333");
+        $("#userNumber").setValue(mobile);
         $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").selectOption("July");
         $(".react-datepicker__year-select").selectOption("2008");
@@ -55,11 +55,13 @@ public class StudentsRegistrationFormWithFakerTests {
         $("#stateCity-wrapper").$(byText("Noida")).click();
         $("#submit").click();
 
+       
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
-        $(".table-responsive").$(byText("Student Name"))
-                .parent().shouldHave(text(firstName+" Ivanova"));
+        tableResponse.$(byText("Student Name")).parent().shouldHave(text(firstName + " " +lastName));
+        tableResponse.$(byText("Student Email")).parent().shouldHave(text(userEmail));
+        tableResponse.$(byText("Mobile")).parent().shouldHave(text(mobile));
+        tableResponse.$(byText("Address")).parent().shouldHave(text(currentAddress));
+        
 
-        $(".table-responsive").$(byText("Student Email"))
-                .parent().shouldHave(text(userEmail));
     }
 }

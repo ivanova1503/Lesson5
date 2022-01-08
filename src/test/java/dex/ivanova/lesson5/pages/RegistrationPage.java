@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class RegistrationPage {
 
+
     SelenideElement
             firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName"),
